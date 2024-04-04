@@ -1,7 +1,3 @@
-// Plugin na portfel by MimiCode
-// Plugin na licencji!
-// proszę nie kopiować <3
-
 package com.top1.portfel.gui;
 
 import com.top1.portfel.config.ConfigManager;
@@ -20,18 +16,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ItemShopGui implements Listener {
-
     private final String guiTitle;
     private final int guiSlots;
     private final Material backgroundMaterial;
     private final Map<Integer, ShopItem> shopItems;
     private final YamalDataManager dataManager;
+    private final Set<Player> playersInTransaction = new HashSet<>();
 
     public ItemShopGui(ConfigManager configManager, YamalDataManager dataManager, Plugin plugin) {
         this.dataManager = dataManager;
@@ -92,8 +89,13 @@ public class ItemShopGui implements Listener {
             Player player = (Player) event.getInventory().getHolder();
             if (event.getClickedInventory() != null && event.getClickedInventory().equals(player.getOpenInventory().getTopInventory())) {
                 event.setCancelled(true);
+                if (playersInTransaction.contains(player)) {
+                    return;
+                }
+                playersInTransaction.add(player);
                 int slotClicked = event.getSlot();
                 handlePurchase(player, slotClicked);
+                playersInTransaction.remove(player);
             }
         }
     }
