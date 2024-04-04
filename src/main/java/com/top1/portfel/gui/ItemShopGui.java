@@ -16,24 +16,23 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ItemShopGui implements Listener {
-    private final String guiTitle;
-    private final int guiSlots;
+
+    private final String guititle;
+    private final int guislots;
     private final Material backgroundMaterial;
     private final Map<Integer, ShopItem> shopItems;
     private final YamalDataManager dataManager;
-    private final Set<Player> playersInTransaction = new HashSet<>();
 
     public ItemShopGui(ConfigManager configManager, YamalDataManager dataManager, Plugin plugin) {
         this.dataManager = dataManager;
-        guiTitle = ChatHelper.colored(configManager.getConfig().getString("ItemShopGui.options.title", "&cSklep"));
-        guiSlots = configManager.getConfig().getInt("ItemShopGui.options.slots", 27);
+        guititle = ChatHelper.colored(configManager.getConfig().getString("ItemShopGui.options.title", "&cSklep z rangami"));
+        guislots = configManager.getConfig().getInt("ItemShopGui.options.slots", 27);
         String backgroundMaterialName = configManager.getConfig().getString("ItemShopGui.options.background", "WHITE_STAINED_GLASS_PANE");
         backgroundMaterial = Material.getMaterial(backgroundMaterialName);
         shopItems = new HashMap<>();
@@ -48,6 +47,10 @@ public class ItemShopGui implements Listener {
             int cost = configManager.getConfig().getInt(path + ".cost", 0);
             List<String> commands = configManager.getConfig().getStringList(path + ".commands");
 
+            String webhooktitle = configManager.getConfig().getString(path + ".webhook.embed.title", "GZ");
+            String webhookdescription = configManager.getConfig().getString(path + ".webhook.embed.description", "Gracz zakupil usluge w naszym sklepie");
+            String webhookcolor = configManager.getConfig().getString(path + "webhook.embed.color", "#71368A");
+
             ItemStack item = new ItemStack(material, count);
             ItemMeta itemMeta = item.getItemMeta();
             itemMeta.setDisplayName(name);
@@ -57,7 +60,7 @@ public class ItemShopGui implements Listener {
             }
             item.setItemMeta(itemMeta);
 
-            ShopItem shopItem = new ShopItem(item, closeGui, cost, commands);
+            ShopItem shopItem = new ShopItem(item, closeGui, cost, commands, webhooktitle, webhookdescription, webhookcolor);
             shopItems.put(Integer.parseInt(slot), shopItem);
         }
 
@@ -65,14 +68,14 @@ public class ItemShopGui implements Listener {
     }
 
     public void openInventory(Player player) {
-        Inventory inventory = Bukkit.createInventory(player, guiSlots, guiTitle);
+        Inventory inventory = Bukkit.createInventory(player, guislots, guititle);
 
         ItemStack backgroundItem = new ItemStack(backgroundMaterial);
         ItemMeta backgroundMeta = backgroundItem.getItemMeta();
         backgroundMeta.setDisplayName(" ");
         backgroundItem.setItemMeta(backgroundMeta);
 
-        for (int i = 0; i < guiSlots; i++) {
+        for (int i = 0; i < guislots; i++) {
             inventory.setItem(i, backgroundItem);
         }
 
@@ -89,13 +92,8 @@ public class ItemShopGui implements Listener {
             Player player = (Player) event.getInventory().getHolder();
             if (event.getClickedInventory() != null && event.getClickedInventory().equals(player.getOpenInventory().getTopInventory())) {
                 event.setCancelled(true);
-                if (playersInTransaction.contains(player)) {
-                    return;
-                }
-                playersInTransaction.add(player);
                 int slotClicked = event.getSlot();
                 handlePurchase(player, slotClicked);
-                playersInTransaction.remove(player);
             }
         }
     }
@@ -122,8 +120,8 @@ public class ItemShopGui implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), processedCommand);
                 }
 
-                player.sendTitle(ChatHelper.colored("&aPomyslnie zakupiono"), ChatHelper.colored("&aPomyslnie zakupiles przedmiot!"));
-                player.sendMessage(ChatHelper.colored("&aPomyslnie zakupiles przedmiot"));
+                player.sendTitle(ChatHelper.colored("&aPomyslnie zakupiono"), ChatHelper.colored("&aPomyslnie zakupiles przedmiot oraz zostal on nadany"));
+                player.sendMessage(ChatHelper.colored("&aPomyslnie zakupiles przedmiot oraz zostal on nadany"));
                 if (shopItem.shouldCloseGui()) {
                     player.closeInventory();
                 }
@@ -139,12 +137,18 @@ class ShopItem {
     private final boolean closeGui;
     private final int cost;
     private final List<String> commands;
+    private final String webhookTitle;
+    private final String webhookDescription;
+    private final String webhookColor;
 
-    public ShopItem(ItemStack item, boolean closeGui, int cost, List<String> commands) {
+    public ShopItem(ItemStack item, boolean closeGui, int cost, List<String> commands, String webhookTitle, String webhookDescription, String webhookColor) {
         this.item = item;
         this.closeGui = closeGui;
         this.cost = cost;
         this.commands = commands;
+        this.webhookTitle = webhookTitle;
+        this.webhookDescription = webhookDescription;
+        this.webhookColor = webhookColor;
     }
 
     public ItemStack getItem() {

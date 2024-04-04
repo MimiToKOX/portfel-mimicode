@@ -8,7 +8,7 @@ ItemShopGui:
     background: "BLACK_STAINED_GLASS_PANE" # z czego będzie się składać tło (pusta przeszczeń)
   gui:
     11: # slot
-      material: GOLD # materiał
+      material: GOLD_BLOCK # materiał
       count: 1 # ilość (NIE PLN! ilośc w staku w gui)
       enchanted: true # czy item ma się świecić?
       name: "&eRanga &aMVP &eNa zawsze" # Nazwa przedmiotu
@@ -30,3 +30,7 @@ ItemShopGui:
       cost: 150
       commands:
         - "luckperms user {player} parent set mimicode"
+
+
+messages:
+  balance: "&aMasz teraz {balance} pln"
