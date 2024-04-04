@@ -1,0 +1,32 @@
+# Witaj w pliku konfiguracyjnym Config.yml!
+# Pozmieniaj tutaj sobie do własnego gustu!
+
+ItemShopGui:
+  options:
+    title: "&0Sklep" # Nazwa gui
+    slots: 27 # Ile gui ma miec slotów
+    background: "BLACK_STAINED_GLASS_PANE" # z czego będzie się składać tło (pusta przeszczeń)
+  gui:
+    11: # slot
+      material: GOLD # materiał
+      count: 1 # ilość (NIE PLN! ilośc w staku w gui)
+      enchanted: true # czy item ma się świecić?
+      name: "&eRanga &aMVP &eNa zawsze" # Nazwa przedmiotu
+      lore: # Opis
+        - "&cKoszt 10 pln"
+        - "&aWięcej informacji pod /rangi"
+      cost: 5 # Koszt (PLN)
+      commands: #komęda wykonywana po kupnie!
+        # {player} to nick gracza
+        - "luckperms user {player} parent set mvp"
+    15:
+      material: IRON_BLOCK
+      count: 1
+      enchanted: true
+      name: "&aRanga &6MimiCode &ana ZAWSZE"
+      lore:
+        - "&cKoszt 150 pln"
+        - "&aWięcej informacji pod /rangi"
+      cost: 150
+      commands:
+        - "luckperms user {player} parent set mimicode"

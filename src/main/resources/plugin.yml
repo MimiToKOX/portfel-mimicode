@@ -1,0 +1,30 @@
+# Oj oj oj...
+# Bracie odpuść... i tak tego nie zmienisz XD
+# Powodząka!
+# L L L L L L L L L L L L L L L L L
+# Ps: by mimicode czyli mimitokox_
+
+name: Portfel-MimiCode
+version: '${project.version}'
+main: com.top1.portfel.Main
+api-version: 1.19
+author: MimiCode
+description: Plugin na porftel by mimicode <3
+website: dsc.gg/mimicode
+
+depend:
+  - PlaceholderAPI
+
+commands:
+  portfel:
+    aliases:
+      - sklepzahajs
+      - itemshop
+  stankonta:
+    aliases:
+      - ilemamnakoncie
+      - bal
+      - money
+      - hajs
+  adminportfel:
+    permission: mimicode.portfel.adminportfel
