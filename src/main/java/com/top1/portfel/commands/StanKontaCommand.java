@@ -6,6 +6,7 @@ package com.top1.portfel.commands;
 
 import com.top1.portfel.config.YamalDataManager;
 import com.top1.portfel.other.ChatHelper;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,7 +35,7 @@ public class StanKontaCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         int balance = dataManager.getPlayerBalance(player.getName());
-        String message = "Masz teraz {balance} pieniędzy";
+        String message = ChatColor.GREEN + "Masz teraz {balance} PLN";
         String messageWithBalance = message.replace("{balance}", String.valueOf(balance));
         player.sendMessage(ChatHelper.colored(messageWithBalance));
 

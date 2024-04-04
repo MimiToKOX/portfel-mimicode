@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -95,7 +96,6 @@ public class ItemShopGui implements Listener {
                 playersInTransaction.add(player);
                 int slotClicked = event.getSlot();
                 handlePurchase(player, slotClicked);
-                playersInTransaction.remove(player);
             }
         }
     }
@@ -107,6 +107,14 @@ public class ItemShopGui implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (event.getPlayer() instanceof Player) {
+            Player player = (Player) event.getPlayer();
+            playersInTransaction.remove(player);
+        }
+    }
+
     public void handlePurchase(Player player, int slot) {
         if (shopItems.containsKey(slot)) {
             ShopItem shopItem = shopItems.get(slot);
@@ -115,7 +123,6 @@ public class ItemShopGui implements Listener {
 
             if (dataManager.getPlayerBalance(playerName) >= cost) {
                 dataManager.setPlayerBalance(playerName, dataManager.getPlayerBalance(playerName) - cost);
-
 
                 for (String command : shopItem.getCommands()) {
                     String processedCommand = command.replace("{player}", playerName);
@@ -162,5 +169,4 @@ class ShopItem {
     public List<String> getCommands() {
         return commands;
     }
-
 }
