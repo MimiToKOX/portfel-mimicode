@@ -7,7 +7,7 @@
 🎇 Oto autorski plugin na Portfel! zawiera on:
  * 🌐 Komędy takie jak: /portfel, /stankonta, /adminportfel
  * 📛 Permsije do adminportfel (mimicode.portfel.adminportfel)
- * 💘 PlaceHolder (%MimiCodePortfel_stankonta%
+ * 💘 PlaceHolder (%MimiCodePortfel_stankonta%)
  * 💵 System zapistwania stanu konta graczy
  * 🔋 Plik konfiguracyjny Config.yml!
  * 📞 Gui w komędzie /portfel
