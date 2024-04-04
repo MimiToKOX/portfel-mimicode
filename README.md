@@ -10,7 +10,7 @@
  * 💘 PlaceHolder (%MimiCodePortfel_stankonta%
  * 💵 System zapistwania stanu konta graczy
  * 🔋 Plik konfiguracyjny Config.yml!
- * 📞 Gui komędy /portfel
+ * 📞 Gui w komędzie /portfel
  * 📡 Kontatybilność z LuckyPerms! (w config.yml)
  * 🔮 Plugin z nowościamy (częste updaty)
    # I WIELE WIELE WIĘCEJ!
