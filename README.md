@@ -12,4 +12,5 @@
  * 🔋 Plik konfiguracyjny Config.yml!
  * 📞 Gui komędy /portfel
  * 📡 Kontatybilność z LuckyPerms! (w config.yml)
+ * 🔮 Plugin z nowościamy (częste updaty)
    # I WIELE WIELE WIĘCEJ!
