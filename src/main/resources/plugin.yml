@@ -9,7 +9,7 @@ version: '${project.version}'
 main: com.top1.portfel.Main
 api-version: 1.16
 author: MimiCode
-description: Plugin na porftel by mimicode <3
+description: Plugin na porftel by MimiCode <3
 website: dsc.gg/mimicode
 
 depend:
