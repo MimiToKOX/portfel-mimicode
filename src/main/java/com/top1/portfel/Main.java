@@ -22,7 +22,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!getDescription().getName().equals("Plugin na porftel by mimicode <3")
+        if (!getDescription().getName().equals("Plugin na porftel by MimiCode <3")
                 && !getDescription().getAuthors().contains("MimiCode")
                 && !getDescription().getName().contains("Portfel-MimiCode")
                 && !getDescription().getMain().contains("com.top1.portfel.Main")
