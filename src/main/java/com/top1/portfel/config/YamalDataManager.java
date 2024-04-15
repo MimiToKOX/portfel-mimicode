@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class YamlDataManager {
+public class YamalDataManager {
 
     private FileConfiguration dataConfig;
     private File dataFile;
